@@ -34,3 +34,12 @@ async def delete_todo_by_id(todo_id: int):
             fake_database.pop(i)
             return {format(todo_id)}
     return {format(todo_id)}
+
+@app.patch("/todos/{id}")
+async def update_todo(id: int, request: Request):
+    for i, todo in enumerate(fake_database):
+        if todo["id"] == id: 
+            updated_todo = await request.json()
+            fake_database[i].update(updated_todo)
+            return {format(id)}
+    return {format(id)}
